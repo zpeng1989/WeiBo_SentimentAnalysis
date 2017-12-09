@@ -1,4 +1,4 @@
-#coding:utf-8
+# coding:utf-8
 
 
 # from __future__ import print_function
@@ -8,9 +8,9 @@ from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.cross_validation import train_test_split
 import numpy as np
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
-import  sys
+import sys
 
-#unicode --> utf-8
+# unicode --> utf-8
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
@@ -22,11 +22,11 @@ def TxtToSet(openfile):
     print len(corpus)
     return corpus
 
-def bow(openfile,tag):
+
+def bow(openfile, tag):
     vectorizer = CountVectorizer()
     X = vectorizer.fit_transform(TxtToSet(openfile))
     print type(X)
-
 
     Y = []
     with open(tag, 'r') as f:
@@ -37,9 +37,11 @@ def bow(openfile,tag):
     f.close()
     Y = np.array(Y)
     print len(Y)
+
     # print X.shape,Y.shape,X[0:10000].shape,Y[0:10000].shape
-    return X,Y,X[0:10000],Y[0:10000]
-    return X, Y, X, Y
+    # return X[0:14870], Y, X[0:10000], Y[0:10000]
+    return X[14870:]
+    # return X, Y, X, Y
 
     # x_train, x_test, y_train, y_test = train_test_split(X, Y, test_size=0.2)
 
@@ -54,14 +56,19 @@ def bow(openfile,tag):
     # np.save('data/y_train.npy', y_train)
     # np.save('data/y_test.npy', y_test)
 
-def Tfidf(openfile,tag):
+# def testbow(openfile):
+#     vectorizer = CountVectorizer()
+#     X = vectorizer.fit_transform(TxtToSet(openfile))
+#     print type(X)
+#     print X
+#     return  X
+
+def Tfidf(openfile, tag):
     vectorizer = CountVectorizer()
     X = vectorizer.fit_transform(TxtToSet(openfile))
     transformer = TfidfTransformer(smooth_idf=False)
     tfidf = transformer.fit_transform(X)
     print type(tfidf)
-
-
 
     Y = []
     with open(tag, 'r') as f:
@@ -72,9 +79,8 @@ def Tfidf(openfile,tag):
     f.close()
     Y = np.array(Y)
     print len(Y)
-    print tfidf.shape,Y.shape,tfidf[0:10000].shape,tfidf[0:10000].shape
-    return tfidf,Y,tfidf[0:10000],Y[0:10000]
-
+    print tfidf.shape, Y.shape, tfidf[0:10000].shape, tfidf[0:10000].shape
+    return tfidf, Y, tfidf[0:10000], Y[0:10000]
 
 
 def bowofhash():
@@ -83,16 +89,15 @@ def bowofhash():
     print X.toarray()
     return X.toarray()
 
+
 def testbowofhash():
     hv = HashingVectorizer(n_features=1000)
     X = hv.transform(TxtToSet())
     return X.toarray()[0:10000]
 
 
-
-
 TxtToSet("data/seg.txt")
-bow("data/seg.txt","data/Tag.txt")
+bow("data/seg.txt", "data/Tag.txt")
 # Tfidf("data/seg.txt","data/Tag.txt")
 # testbow("data/seg.txt")
 # bowofhash()

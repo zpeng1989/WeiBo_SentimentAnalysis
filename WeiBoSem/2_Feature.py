@@ -1,21 +1,24 @@
-#coding:utf-8
+# coding:utf-8
 
 from __future__ import print_function
 import jieba
 import jieba.posseg as pseg
-import  sys
-#unicode --> utf-8
+import sys
+
+# unicode --> utf-8
 reload(sys)
 sys.setdefaultencoding('utf-8')
-#做一个没有标记的文档 待会拿来分词
-def TotalDoc(openfile,writefile):
+
+
+# 做一个没有标记的文档 待会拿来分词
+def TotalDoc(openfile, writefile):
     with open(openfile) as f:
-        #with open("train.txt") as f:
+        # with open("train.txt") as f:
         word = f.readline()
-        with open(writefile,'w') as w:
+        with open(writefile, 'w') as w:
             # with open("ForSeg.txt", 'w') as w:
             while word:
-                #变成list
+                # 变成list
                 Forseg = word.strip().split(' ')
                 w.write(Forseg[1])
                 w.write("\n")
@@ -23,15 +26,16 @@ def TotalDoc(openfile,writefile):
         w.close()
     f.close()
 
-#单独的所有标签
-def TotalTag(openfile,writefile):
+
+# 单独的所有标签
+def TotalTag(openfile, writefile):
     with open(openfile) as f:
         # with open("train.txt") as f:
         word = f.readline()
-        with open(writefile,'w') as w:
+        with open(writefile, 'w') as w:
             # with open("Tag.txt", 'w') as w:
             while word:
-                #变成list
+                # 变成list
                 Forseg = word.strip().split(' ')
                 w.write(Forseg[0])
                 w.write("\n")
@@ -39,12 +43,13 @@ def TotalTag(openfile,writefile):
         w.close()
     f.close()
 
-#利用jieba做中文分词
-def Seg(openfile,writefile):
+
+# 利用jieba做中文分词
+def Seg(openfile, writefile):
     with open(openfile) as f:
         # with open("ForSeg.txt") as f:
         line = f.readline()
-        with open(writefile,'w') as w:
+        with open(writefile, 'w') as w:
             # with open("seg.txt", 'w') as w:
             while line:
                 seg_list = jieba.cut(line)
@@ -54,14 +59,14 @@ def Seg(openfile,writefile):
     f.close()
 
 
-def SegNoStopWord(openfile,writefile):
-    stopword = ['@',':','，','/','_','。','[',']','、','了','（','）','＝',
-                '～','；','...','！','?','／','..','？',',','!','—','~','》','《','：',
-                '......',';','|','…','.','「','」','-','(',')','［','］','〈','〉','^','＂']
+def SegNoStopWord(openfile, writefile):
+    stopword = ['@', ':', '，', '/', '_', '。', '[', ']', '、', '了', '（', '）', '＝',
+                '～', '；', '...', '！', '?', '／', '..', '？', ',', '!', '—', '~', '》', '《', '：',
+                '......', ';', '|', '…', '.', '「', '」', '-', '(', ')', '［', '］', '〈', '〉', '^', '＂']
     with open(openfile) as f:
         # with open("ForSeg.txt") as f:
         line = f.readline()
-        with open(writefile,'w') as w:
+        with open(writefile, 'w') as w:
             # with open("segnostopword.txt", 'w') as w:
             while line:
                 seg_list = jieba.cut(line)
@@ -74,13 +79,15 @@ def SegNoStopWord(openfile,writefile):
         w.close()
     f.close()
 
+
 def pos():
     with open("segnostopword.txt") as f:
         line = f.readline()
-        line = line.replace(" ","")
+        line = line.replace(" ", "")
         words = pseg.cut(line)
         for flag in words:
-            print  (flag,end = ' ')
+            print(flag, end=' ')
+
 
 # TotalDoc("data/train.txt","data/ForSeg.txt")
 # TotalDoc("data/trainnonull.txt","data/ForSegNoNull.txt")
@@ -102,3 +109,5 @@ def pos():
 # SegNoStopWord("data/ForSegNoNull.txt","data/sw_segnonull.txt")
 # SegNoStopWord("data/ForSegneg.txt","data/sw_segneg.txt")
 # SegNoStopWord("data/ForSegpos.txt","data/sw_segpos.txt")
+
+Seg("data/4_test.txt", "data/4_segtest.txt")
