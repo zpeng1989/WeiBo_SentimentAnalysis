@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        <title>Slicebox-3D</title>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <meta name="description" content="Slicebox - 3D Image Slider with Fallback" />
+        <meta name="keywords" content="jquery, css3, 3d, webkit, fallback, slider, css3, 3d transforms, slices, rotate, box, automatic" />
+
+        <link rel="stylesheet" type="text/css" href="css/demo.css" />	
+		<script type="text/javascript" src="js/modernizr.custom.46884.js"></script>
+	</head>
+
+	<body>
+		<div class="container">
+			<div class="header">
+				<div class="logo"><img src="images/logo1.png"></div>
+			    <div class="text"> <span>微博情感分析系统</span></div>
+			</div>
+			<div class="tab">
+			      <div class="tab-item"><a href="index.html">鹿晗关晓彤</a></div>
+			      <div class="tab-item"><a href="index2.html">运动教室</a></div>
+			      <div class="tab-item"><a href="index3.html">单纯的小美好</a></div>
+			      <div class="tab-item"><a href="index4.html">热搜疯狂打Call</a></div>
+            </div>
+			<div class="wrapper">
+				<ul id="sb-slider" class="sb-slider">
+					<li>
+						<a href="#"><img src="images/2-1.png"/></a>		
+					</li>
+					<li>
+						<a href="#"><img src="images/2-2.png"/></a>	
+					</li>
+					<li>
+						<a href="#"><img src="images/2-3.png"/></a>	
+					</li>
+					<li>
+						<a href="#"><img src="images/2-4.png"/></a>	
+					</li>
+					<li>
+						<a href="#"><img src="images/2-5.png"/></a>	
+					</li>
+				</ul>
+				<div id="shadow" class="shadow"></div>
+				<div id="nav-arrows" class="nav-arrows">
+					<a href="#">Next</a>
+					<a href="#">Previous</a>
+				</div>
+			</div><!-- /wrapper -->
+		</div>
+
+		<script type="text/javascript" src="http://cdn.staticfile.org/jquery/1.8.2/jquery.min.js"></script>
+		<script type="text/javascript" src="js/jquery.slicebox.js"></script>
+		<script type="text/javascript">
+			$(function() {
+				
+				var Page = (function() {
+
+					var $navArrows = $( '#nav-arrows' ).hide(),
+						$shadow = $( '#shadow' ).hide(),
+						slicebox = $( '#sb-slider' ).slicebox( {
+							onReady : function() {
+
+								$navArrows.show();
+								$shadow.show();
+
+							},
+							orientation : 'r',
+							cuboidsRandom : true,
+							disperseFactor : 30
+						} ),
+						
+						init = function() {
+
+							initEvents();
+							
+						},
+						initEvents = function() {
+
+							// add navigation events
+							$navArrows.children( ':first' ).on( 'click', function() {
+
+								slicebox.next();
+								return false;
+
+							} );
+
+							$navArrows.children( ':last' ).on( 'click', function() {
+								
+								slicebox.previous();
+								return false;
+
+							} );
+
+						};
+
+						return { init : init };
+
+				})();
+
+				Page.init();
+
+			});
+		</script>
+	</body>
+</html>	
